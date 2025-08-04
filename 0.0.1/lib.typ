@@ -16,17 +16,11 @@
   placeholder-text: "图片占位符",
 ) = {
   if content == none {
-    // 显示占位符
-    rect(
+    // 显示空白占位符
+    box(
       height: height,
       width: width,
-      fill: rgb("#f8f8f8"),
-      stroke: 1pt + rgb("#ddd"),
-    )[
-      #align(center + horizon)[
-        #text(size: 10pt, fill: rgb("#999"))[#placeholder-text]
-      ]
-    ]
+    )[]
   } else {
     // 显示已加载的图片内容
     box(
@@ -238,11 +232,11 @@
 
   let calc-image-width = if image-width == auto {
     if not show-header and not show-footer and not has-title and not has-content {
-      // 全屏模式
-      if layout == "grid" { 100% } else { 90% }
+      // 全屏模式 - 图片本身的宽度，而不是网格的宽度
+      if layout == "grid" { 45% } else { 90% }
     } else {
-      // 其他模式
-      if layout == "grid" { 100% } else { 80% }
+      // 其他模式 - 图片本身的宽度
+      if layout == "grid" { 40% } else { 80% }
     }
   } else {
     image-width
@@ -280,7 +274,22 @@
         ..range(4).map(i => {
           if i < images.len() and images.at(i) != none {
             let img-content = images.at(i)
-            align(center)[
+            // 根据位置设置不同的对齐方式，使图片向中心靠拢
+            let cell-align = if i == 0 {
+              // 左上：向右下对齐
+              bottom + right
+            } else if i == 1 {
+              // 右上：向左下对齐
+              bottom + left
+            } else if i == 2 {
+              // 左下：向右上对齐
+              top + right
+            } else {
+              // 右下：向左上对齐
+              top + left
+            }
+
+            align(cell-align)[
               #box[
                 #safe-image(
                   img-content,
@@ -295,18 +304,22 @@
               ]
             ]
           } else {
-            // 空白区域
-            align(center)[
-              #rect(
+            // 空白区域 - 保持网格位置但内容为空
+            let cell-align = if i == 0 {
+              bottom + right
+            } else if i == 1 {
+              bottom + left
+            } else if i == 2 {
+              top + right
+            } else {
+              top + left
+            }
+
+            align(cell-align)[
+              #box(
                 height: calc-image-height,
                 width: calc-image-width,
-                fill: rgb("#f8f8f8"),
-                stroke: 1pt + rgb("#ddd"),
-              )[
-                #align(center + horizon)[
-                  #text(size: 10pt, fill: rgb("#999"))[空白位置 #(i + 1)]
-                ]
-              ]
+              )[]
             ]
           }
         })
@@ -348,19 +361,13 @@
             v(gap)
           }
         } else {
-          // 显示占位符
+          // 空白区域 - 保持线性位置但内容为空
           align(center)[
-            #rect(
+            #box(
               height: calc-image-height,
               width: calc-image-width,
-              fill: rgb("#f8f8f8"),
-              stroke: 1pt + rgb("#ddd"),
-            )[
-              #align(center + horizon)[
-                #text(size: 10pt, fill: rgb("#999"))[图片占位符 #(i + 1)]
-              ]
-            ]
-            #if i < captions.len() and captions.at(i) != none [
+            )[]
+            #if i < captions.len() and captions.at(i) != none and captions.at(i) != "" [
               #v(0.2em)
               #text(size: caption-size)[#captions.at(i)]
             ]
