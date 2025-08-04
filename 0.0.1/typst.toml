@@ -1,0 +1,12 @@
+[package]
+name = "image-ppt"
+version = "0.0.1"
+entrypoint = "lib.typ"
+authors = ["PKU Typst 同好会 <https://github.com/pku-typst>"]
+license = "MIT"
+description = "4 images per slide, for group meeting."
+repository = "https://github.com/pku-typst/PKU-typst-template"
+keywords = ["template", "image"]
+categories = ["report", "thesis"]
+compiler = "0.13"
+exclude = []
