@@ -1,5 +1,5 @@
 // PPT模板使用示例 - 展示所有功能
-#import "lib.typ": *
+#import "../lib.typ": *
 
 #show: doc => ppt-conf(
   title: "image-ppt 模板",

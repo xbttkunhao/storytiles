@@ -180,8 +180,8 @@
     paper: "presentation-16-9",
     margin: (
       x: 0.5cm,
-      top: if show-header { 1.8cm } else { 0.5cm }, // 为页眉留出足够空间
-      bottom: if show-footer { 1.8cm } else { 0.5cm }, // 为页脚留出足够空间
+      top: if show-header { 1.8cm } else { 0.05cm }, // 为页眉留出足够空间
+      bottom: if show-footer { 1.8cm } else { 0.05cm }, // 为页脚留出足够空间
     ),
     header: if show-header {
       // 使用原有页眉
@@ -216,9 +216,9 @@
 
   // 动态计算图片尺寸
   let calc-image-height = if image-height == auto {
-    if not show-header and not show-footer and not has-title and not has-content {
+    if not show-header and not show-footer and not has-title {
       // 全屏模式：填满整个页面
-      if layout == "grid" { if captions == () { 49.5% } else { 47% } } else { 80% }
+      if layout == "grid" { if captions == () { 49.99% } else { 47% } } else { 80% }
     } else if not show-header and not show-footer {
       // 无页眉页脚但有标题/内容
       if layout == "grid" { 40% } else { 70% }
@@ -231,12 +231,12 @@
   }
 
   let calc-image-width = if image-width == auto {
-    if not show-header and not show-footer and not has-title and not has-content {
+    if not show-header and not show-footer and not has-title {
       // 全屏模式 - 图片本身的宽度，而不是网格的宽度
-      if layout == "grid" { 45% } else { 90% }
+      if layout == "grid" { 100% } else { 90% }
     } else {
       // 其他模式 - 图片本身的宽度
-      if layout == "grid" { 40% } else { 80% }
+      if layout == "grid" { 100% } else { 80% }
     }
   } else {
     image-width
@@ -382,7 +382,7 @@
 
   // 页面文字内容
   if content != none [
-    #v(1em)
+    // #v(1em)
     #content
   ]
 }
