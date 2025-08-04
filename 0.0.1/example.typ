@@ -12,9 +12,10 @@
 // 标题页
 #title-page(
   main-title: "近代物理实验",
-  subtitle: "光电效应实验报告",
+  subtitle: "光电效应报告",
   author: "张三",
   institution: "北京大学物理学院",
+  is-first-page: true, // 指定这是第一页，不需要分页
   // logo: "logo.png" // 如果有logo的话
 )
 
@@ -25,10 +26,10 @@
 #four-image-page(
   title: "实验装置与结果",
   images: (
-    "image1.png", // 替换为实际图片路径
-    "image2.png",
-    "image3.png",
-    "image4.png",
+    none, // 替换为实际图片路径: "image1.png"
+    none, // "image2.png"
+    none, // "image3.png"
+    none, // "image4.png"
   ),
   captions: (
     "实验装置图",
@@ -50,7 +51,7 @@
   ],
   images: (
     (
-      path: "image1.png",
+      path: none, // "image1.png" - 替换为实际图片路径
       x: 10%,
       y: 15%,
       width: 35%,
@@ -58,7 +59,7 @@
       caption: "左上角图片",
     ),
     (
-      path: "image2.png",
+      path: none, // "image2.png" - 替换为实际图片路径
       x: 55%,
       y: 15%,
       width: 35%,
@@ -104,10 +105,10 @@
 #four-image-page(
   title: "数据处理流程",
   images: (
-    "step1.png",
-    "step2.png",
-    "step3.png",
-    "step4.png",
+    none, // "step1.png" - 替换为实际图片路径
+    none, // "step2.png"
+    none, // "step3.png"
+    none, // "step4.png"
   ),
   captions: (
     "步骤1：数据采集",

@@ -32,18 +32,27 @@
   // 设置页面为16:9横向
   set page(
     paper: "presentation-16-9",
-    margin: (x: 1.5cm, y: 1cm),
+    margin: (x: 1.5cm, y: 1.8cm), // 增加上下边距
     numbering: "1",
     header: [
+      #v(0.3em) // 添加页眉顶部间距
       #set text(size: 10pt, fill: theme)
-      #h(1fr) #title #h(1fr)
+      #box(width: 100%)[
+        #align(center)[
+          #text(size: 9pt)[#title]
+        ]
+      ]
+      #v(0.1em) // 添加分隔线前的间距
       #line(length: 100%, stroke: 0.5pt + theme)
     ],
     footer: [
       #set text(size: 8pt, fill: gray)
       #line(length: 100%, stroke: 0.5pt + gray)
       #v(0.2em)
-      #author #h(1fr) #if date != none { date } else { datetime.today().display() } #h(1fr) #counter(page).display()
+      #author #h(1fr) #if date != none { date } else { datetime.today().display() } #h(1fr) #context (
+        counter(page).display()
+      )
+      #v(0.2em) // 添加页脚底部间距
     ],
   )
 
@@ -115,8 +124,11 @@
       row-gutter: gap,
       ..range(4).map(i => {
         if i < images.len() and images.at(i) != none {
+          let img-path = images.at(i)
           align(center)[
-            #image(images.at(i), height: image-height, width: image-width, fit: "contain")
+            #box[
+              #image(img-path, height: image-height, width: image-width, fit: "contain")
+            ]
             #if i < captions.len() and captions.at(i) != none [
               #v(0.2em)
               #text(size: caption-size)[#captions.at(i)]
@@ -124,7 +136,18 @@
           ]
         } else {
           // 空白区域
-          v(image-height)
+          align(center)[
+            #rect(
+              height: image-height,
+              width: image-width,
+              fill: rgb("#f8f8f8"),
+              stroke: 1pt + rgb("#ddd"),
+            )[
+              #align(center + horizon)[
+                #text(size: 10pt, fill: rgb("#999"))[空白位置]
+              ]
+            ]
+          ]
         }
       })
     )
@@ -133,13 +156,38 @@
     for i in range(calc.min(4, images.len())) {
       if images.at(i) != none {
         align(center)[
-          #image(images.at(i), height: image-height, width: image-width, fit: "contain")
+          #box[
+            #image(images.at(i), height: image-height, width: image-width, fit: "contain")
+          ]
           #if i < captions.len() and captions.at(i) != none [
             #v(0.2em)
             #text(size: caption-size)[#captions.at(i)]
           ]
         ]
-        v(gap)
+        if i < calc.min(4, images.len()) - 1 {
+          v(gap)
+        }
+      } else {
+        // 显示占位符
+        align(center)[
+          #rect(
+            height: image-height,
+            width: image-width,
+            fill: rgb("#f8f8f8"),
+            stroke: 1pt + rgb("#ddd"),
+          )[
+            #align(center + horizon)[
+              #text(size: 10pt, fill: rgb("#999"))[图片占位符]
+            ]
+          ]
+          #if i < captions.len() and captions.at(i) != none [
+            #v(0.2em)
+            #text(size: caption-size)[#captions.at(i)]
+          ]
+        ]
+        if i < calc.min(4, images.len()) - 1 {
+          v(gap)
+        }
       }
     }
   }
@@ -190,16 +238,36 @@
 
   // 使用place来自定义图片位置
   for img-config in images {
+    let img-x = img-config.at("x", default: 0%)
+    let img-y = img-config.at("y", default: 0%)
+    let img-width = img-config.at("width", default: 30%)
+    let img-height = img-config.at("height", default: 30%)
+
     place(
-      dx: img-config.at("x", default: 0%),
-      dy: img-config.at("y", default: 0%),
+      dx: img-x,
+      dy: img-y,
       align(center)[
-        #image(
-          img-config.path,
-          width: img-config.at("width", default: 30%),
-          height: img-config.at("height", default: 30%),
-          fit: "contain",
-        )
+        #box[
+          #if img-config.path != none {
+            image(
+              img-config.path,
+              width: img-width,
+              height: img-height,
+              fit: "contain",
+            )
+          } else {
+            rect(
+              height: img-height,
+              width: img-width,
+              fill: rgb("#f8f8f8"),
+              stroke: 1pt + rgb("#ddd"),
+            )[
+              #align(center + horizon)[
+                #text(size: 10pt, fill: rgb("#999"))[图片占位符]
+              ]
+            ]
+          }
+        ]
         #if "caption" in img-config [
           #v(0.2em)
           #text(size: 10pt)[#img-config.caption]
@@ -256,13 +324,15 @@
 /// - `institution`: 机构
 /// - `date`: 日期
 /// - `logo`: 机构logo路径 (可选)
+/// - `is-first-page`: 是否为第一页 (默认: true，避免空白页)
 /// ### 用法
 /// ```typst
 /// #title-page(
 ///   main-title: "我的演示文稿",
 ///   subtitle: "副标题",
 ///   author: "张三",
-///   institution: "北京大学物理学院"
+///   institution: "北京大学物理学院",
+///   is-first-page: true
 /// )
 /// ```
 #let title-page(
@@ -272,8 +342,15 @@
   institution: "",
   date: none,
   logo: none,
+  is-first-page: true,
 ) = {
-  pagebreak()
+  // 只有当不是第一页时才分页
+  if not is-first-page {
+    pagebreak()
+  }
+
+  // 临时隐藏页眉和页脚
+  set page(header: none, footer: none)
 
   align(center + horizon)[
     #if logo != none [
@@ -321,6 +398,6 @@
 
   outline(
     depth: depth,
-    indent: true,
+    indent: auto,
   )
 }
