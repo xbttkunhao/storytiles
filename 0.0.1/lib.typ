@@ -1,3 +1,5 @@
+#import "@preview/cuti:0.2.1": show-cn-fakebold
+
 /// PPT模板 - 支持四图片布局和文字添加
 ///
 /// 主要功能：
@@ -33,6 +35,7 @@
   }
 }
 
+
 /// 配置PPT文档
 /// === 参数
 /// - `title`: 演示文稿标题
@@ -56,6 +59,7 @@
   font-size: 12pt,
   doc,
 ) = {
+  show: show-cn-fakebold
   // 设置页面为16:9横向
   set page(
     paper: "presentation-16-9",
@@ -94,7 +98,7 @@
 
   set heading(numbering: "1.")
   show heading: it => [
-    #set text(size: if it.level == 1 { 18pt } else { 16pt }, fill: theme, weight: "bold")
+    #set text(size: if it.level == 1 { 26pt } else { 16pt }, fill: theme, weight: "bold")
     #v(0.5em)
     #it
     #v(0.3em)
@@ -435,9 +439,43 @@
 #let custom-layout-page(
   title: none,
   content: none,
+  show-header: false,
+  show-footer: false,
   images: (),
 ) = {
   pagebreak()
+  set page(
+    paper: "presentation-16-9",
+    margin: (
+      x: 0.5cm,
+      top: if show-header { 1.8cm } else { 0.05cm }, // 为页眉留出足够空间
+      bottom: if show-footer { 1.8cm } else { 0.05cm }, // 为页脚留出足够空间
+    ),
+    header: if show-header {
+      // 使用原有页眉
+      [
+        #v(0.3em)
+        #set text(size: 10pt, fill: rgb("#1f4e79"))
+        #box(width: 100%)[
+          #align(center)[
+            #text(size: 9pt)[演示文稿]
+          ]
+        ]
+        #v(0.1em)
+        #line(length: 100%, stroke: 0.5pt + rgb("#1f4e79"))
+      ]
+    } else { none },
+    footer: if show-footer {
+      // 使用原有页脚
+      [
+        #set text(size: 8pt, fill: gray)
+        #line(length: 100%, stroke: 0.5pt + gray)
+        #v(0.2em)
+        作者 #h(1fr) #datetime.today().display() #h(1fr) #context (counter(page).display())
+        #v(0.2em)
+      ]
+    } else { none },
+  )
 
   // 页面标题
   if title != none [
@@ -589,11 +627,14 @@
 #let outline-page(
   outline-title: "目录",
   depth: 2,
+  is-first-page: false,
 ) = {
-  pagebreak()
+  if not is-first-page {
+    pagebreak()
+  }
 
   align(center)[
-    #heading(level: 1)[#outline-title]
+    #heading(numbering: none, level: 2)[#outline-title]
   ]
 
   v(1em)
@@ -638,7 +679,7 @@
   content,
   x: 10%,
   y: 10%,
-  width: 25%,
+  width: auto,
   height: auto,
   background: rgb(255, 255, 255, 220), // 半透明白色
   border-color: rgb("#1f4e79"), // 默认主题色
