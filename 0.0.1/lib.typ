@@ -118,6 +118,7 @@
 /// - `layout`: 布局方式 ("grid"为2x2网格, "linear"为线性排列) (默认: "grid")
 /// - `grid-align-x`: 网格水平对齐 (left, center, right) (默认: center)
 /// - `grid-align-y`: 网格垂直对齐 (top, center, bottom) (默认: center)
+/// - `grid-scale`: 整体缩放比例 (默认: 1.0，0.8为80%，1.2为120%)
 ///
 /// === 正确用法
 /// **在主文件中预加载图片，然后传递给模板函数**：
@@ -152,6 +153,16 @@
 /// )
 /// ```
 ///
+/// === 缩放控制用法
+/// ```typst
+/// #four-image-page(
+///   images: (img1, img2, img3, img4),
+///   grid-scale: 0.8,     // 缩小到80%
+///   // 或
+///   grid-scale: 1.2,     // 放大到120%
+/// )
+/// ```
+///
 /// === 错误用法
 /// ```typst
 /// #four-image-page(
@@ -172,6 +183,7 @@
   layout: "grid",
   grid-align-x: center, // 网格水平对齐：left, center, right
   grid-align-y: center, // 网格垂直对齐：top, center, bottom
+  grid-scale: 1.0, // 整体缩放比例：1.0为正常大小，0.8为80%，1.2为120%
 ) = {
   pagebreak()
 
@@ -214,9 +226,9 @@
   let has-content = content != none
   let has-captions = captions.len() > 0 and captions.any(c => c != none and c != "")
 
-  // 动态计算图片尺寸
+  // 动态计算图片尺寸（应用缩放比例）
   let calc-image-height = if image-height == auto {
-    if not show-header and not show-footer and not has-title {
+    let base-height = if not show-header and not show-footer and not has-title {
       // 全屏模式：填满整个页面
       if layout == "grid" { if captions == () { 49.99% } else { 47% } } else { 80% }
     } else if not show-header and not show-footer {
@@ -226,20 +238,26 @@
       // 标准模式
       if layout == "grid" { 35% } else { 60% }
     }
+    // 应用缩放比例
+    base-height * grid-scale
   } else {
-    image-height
+    // 用户指定的尺寸也应用缩放
+    image-height * grid-scale
   }
 
   let calc-image-width = if image-width == auto {
-    if not show-header and not show-footer and not has-title {
+    let base-width = if not show-header and not show-footer and not has-title {
       // 全屏模式 - 图片本身的宽度，而不是网格的宽度
       if layout == "grid" { 100% } else { 90% }
     } else {
       // 其他模式 - 图片本身的宽度
       if layout == "grid" { 100% } else { 80% }
     }
+    // 应用缩放比例
+    base-width * grid-scale
   } else {
-    image-width
+    // 用户指定的尺寸也应用缩放
+    image-width * grid-scale
   }
 
   // 页面标题

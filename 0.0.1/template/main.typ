@@ -275,7 +275,7 @@
     image("manbo.png"),
     image("manbo.png"),
   ),
-  grid-align-x: center, // 图片水平居中
+  grid-align-x: left, // 图片水平居中
   captions: ("小图1", "小图2", "小图3", "小图4"),
   image-height: 25%, // 自定义高度
   image-width: 30%, // 自定义宽度
