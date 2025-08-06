@@ -58,7 +58,7 @@
     none,
     none,
   ),
-  captions: (),
+  captions: ("1", "1", "1", "1"),
   content: [
     #floating-box(
       x: 35%,
