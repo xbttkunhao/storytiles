@@ -61,6 +61,7 @@
 ) = {
   show: show-cn-fakebold
   // 设置页面为16:9横向
+  set figure(supplement: "图")
   set page(
     paper: "presentation-16-9",
     margin: (x: 1.5cm, y: 1.8cm), // 增加上下边距
@@ -106,6 +107,8 @@
 
   doc
 }
+
+
 
 /// 创建四图片布局页面
 /// === 参数
@@ -199,30 +202,31 @@
       top: if show-header { 1.8cm } else { 0.05cm }, // 为页眉留出足够空间
       bottom: if show-footer { 1.8cm } else { 0.05cm }, // 为页脚留出足够空间
     ),
-    header: if show-header {
-      // 使用原有页眉
-      [
-        #v(0.3em)
-        #set text(size: 10pt, fill: rgb("#1f4e79"))
-        #box(width: 100%)[
-          #align(center)[
-            #text(size: 9pt)[演示文稿]
-          ]
-        ]
-        #v(0.1em)
-        #line(length: 100%, stroke: 0.5pt + rgb("#1f4e79"))
-      ]
-    } else { none },
-    footer: if show-footer {
-      // 使用原有页脚
-      [
-        #set text(size: 8pt, fill: gray)
-        #line(length: 100%, stroke: 0.5pt + gray)
-        #v(0.2em)
-        作者 #h(1fr) #datetime.today().display() #h(1fr) #context (counter(page).display())
-        #v(0.2em)
-      ]
-    } else { none },
+    // header: if show-header {
+    //   // 使用原有页眉
+    //   [
+    //     #v(0.3em)
+    //     #set text(size: 10pt, fill: rgb("#1f4e79"))
+    //     #box(width: 100%)[
+    //       #align(center)[
+    //         #text(size: 9pt)[#title]
+    //       ]
+    //     ]
+    //     #v(0.1em)
+    //     #line(length: 100%, stroke: 0.5pt + rgb("#1f4e79"))
+    //   ]
+    // } else { none },
+
+    // footer: if show-footer {
+    //   // 使用原有页脚
+    //   [
+    //     #set text(size: 8pt, fill: gray)
+    //     #line(length: 100%, stroke: 0.5pt + gray)
+    //     #v(0.2em)
+    //      #h(1fr) #datetime.today().display() #h(1fr) #context (counter(page).display())
+    //     #v(0.2em)
+    //   ]
+    // } else { none },
   )
 
   // 计算可用空间和图片尺寸
