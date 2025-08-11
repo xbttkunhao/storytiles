@@ -16,7 +16,7 @@
   author: "xbtt",
   institution: "开源项目",
   is-first-page: true,
-  // logo: image("manbo.png")  // 如果需要logo可以取消注释
+  // logo: image("typst_logo.jpg")  // 如果需要logo可以取消注释
 )
 
 // 目录页
@@ -26,9 +26,9 @@
 #four-image-page(
   title: "标准模式展示",
   images: (
-    image("manbo.png"), // 测试图片
+    image("typst_logo.jpg"), // 测试图片
     none, // 占位符
-    image("manbo.png"), // 测试图片
+    image("typst_logo.jpg"), // 测试图片
     none, // 占位符
   ),
   captions: (),
@@ -53,8 +53,8 @@
   show-header: false, // 隐藏页眉
   show-footer: false, // 隐藏页脚
   images: (
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
     none,
     none,
   ),
@@ -81,10 +81,10 @@
   content: none, // 无额外内容
   gap: 0.0em,
   images: (
-    image("manbo.png"), // 全屏模式图片更大
-    image("manbo.png"),
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"), // 全屏模式图片更大
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
   ),
   captions: (), // 无说明文字
 )
@@ -95,10 +95,10 @@
   show-header: false, // 隐藏页眉
   show-footer: true, // 显示页脚
   images: (
-    figure(image("manbo.png"), caption: "图片1"),
+    figure(image("typst_logo.jpg"), caption: "图片1"),
     none,
     none,
-    image("manbo.png"),
+    image("typst_logo.jpg"),
   ),
   captions: ("图片1", "", "", "图片4"),
   content: [
@@ -121,8 +121,8 @@
   show-footer: false, // 隐藏页脚
   images: (
     none,
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
     none,
   ),
   captions: ("", "图片2", "图片3", ""),
@@ -142,9 +142,9 @@
   title: "线性布局模式",
   layout: "linear", // 线性排列
   images: (
-    image("manbo.png"),
+    image("typst_logo.jpg"),
     none,
-    image("manbo.png"),
+    image("typst_logo.jpg"),
     none,
   ),
   captions: (
@@ -171,8 +171,8 @@
   title: none,
   content: none,
   images: (
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
     none,
   ),
   captions: ("", "", ""),
@@ -193,7 +193,7 @@
   ],
   images: (
     (
-      content: image("manbo.png"),
+      content: image("typst_logo.jpg"),
       x: 60%,
       y: 10%,
       width: 35%,
@@ -201,7 +201,7 @@
       caption: "右上角图片",
     ),
     (
-      content: image("manbo.png"),
+      content: image("typst_logo.jpg"),
       x: 5%,
       y: 60%,
       width: 30%,
@@ -265,10 +265,10 @@
 #four-image-page(
   title: "自定义尺寸示例",
   images: (
-    image("manbo.png"),
-    image("manbo.png"),
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
   ),
   grid-align-x: left, // 图片水平居中
   captions: ("小图1", "小图2", "小图3", "小图4"),
@@ -290,8 +290,8 @@
 #four-image-page(
   title: "浮动内容框演示",
   images: (
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
     none,
     none,
   ),
@@ -428,10 +428,10 @@
   show-header: false,
   show-footer: false,
   images: (
-    image("manbo.png"),
-    image("manbo.png"),
-    image("manbo.png"),
-    image("manbo.png"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
+    image("typst_logo.jpg"),
   ),
   captions: (),
   content: [
