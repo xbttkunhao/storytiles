@@ -14,11 +14,11 @@ This is a Typst template specifically designed for presentations, especially sui
 - **Professional appearance**: 16:9 presentation ratio with clean headers and footers
 
 ## Quick Start
-![22](template/thumbnail.png)
+![A slide with a white background, four images, and a box with text on top](template/thumbnail.png)
 ### 1. Basic Configuration
 
 ```typst
-#import "lib.typ": *
+#import "@preview/storytiles:0.1.0": *
 
 #show: doc => ppt-conf(
   title: "My Presentation",
@@ -306,11 +306,11 @@ For issues or suggestions, please refer to the Typst official documentation or s
 - **专业外观**: 16:9 演示比例，美观的页眉页脚
 
 ## 快速开始
-![22](template/thumbnail.png)
+![A slide with a white background, four images, and a box with text on top](template/thumbnail.png)
 ### 1. 基本配置
 
 ```typst
-#import "lib.typ": *
+#import "@preview/storytiles:0.1.0": *
 
 #show: doc => ppt-conf(
   title: "我的演示文稿",

@@ -1,5 +1,5 @@
 // PPT模板使用示例 - 展示所有功能
-#import "@local/storytiles:0.0.1": *
+#import "@preview/storytiles:0.0.1": *
 
 #show: doc => ppt-conf(
   title: "image-ppt 模板",
